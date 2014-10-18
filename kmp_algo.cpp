@@ -1,5 +1,5 @@
 
-//#define NDEBUG
+#define NDEBUG
 
 #include <iostream>
 #include <fstream>
@@ -86,7 +86,9 @@ void CKMPAlgo::ConstructPi (
 	for (size_t j = 1; j < ptrn.size (); ++j) {
 		while (i > 0 && ptrn[i] != ptrn [j]) i = ptrn [i];
 		if (ptrn [i] == ptrn [j]) ++i;
-//printf ("%d -- %d\n", i, j);
+#ifndef NDEBUG
+		printf ("%d -- %d\n", i, j);
+#endif
 		piArr [j + 1] = i;
 	}
 	
@@ -145,8 +147,7 @@ int main (int argc, char *argv []) {
 	
 	CKMPAlgo subsAlgo (tstStr, tstPtrn);
 #ifndef NDEBUG
-	//subsAlgo.PrintPi ();
-	//return 0;
+	subsAlgo.PrintPi ();
 #endif
 	subsAlgo.Find (resInfo);
 	for (auto & entry : resInfo) {
