@@ -13,13 +13,16 @@ class KmpAlgo (object):
 		self.m_piArr = list()
 		return
 		
-	def SetNewPattern (self, pattern):
-		self.m_pattern = pattern
-		self.m_piArr = list()
-		return
+	def __setattr__ (self, name, val):
+		if name == 'm_pattern':
+			self.__dict__[name] = val
+			self.m_piArr = list()
+		else:
+			super(KmpAlgo, self).__setattr__(name, val)
+		return None
 		
-	def GetPattern (self):
-		return self.m_pattern
+	def __getattr__ (self, name):
+		return self.__dict__[name]
 		
 	def __MakePiArr (self, pattern):
 		arr = [0]
@@ -100,7 +103,7 @@ def FindAtFile(ptrn, flName):
 	
 	with file (flName, 'r') as f:
 		buf = f.read()
-		print ("File content length: {}\n\n".format (len(buf)))
+		print ("File content length at bytes: {}\n\n".format (len(buf)))
 		PrintResults(ptrn, kmp.Search(buf))
 	
 	return 0
